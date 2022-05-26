@@ -16,6 +16,7 @@ import Signup from "./pages/Signup";
 import NoMatch from "./pages/NoMatch";
 import Profile from "./pages/Profile";
 import GamePage from "./pages/GamePage";
+import About from "./pages/About";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
