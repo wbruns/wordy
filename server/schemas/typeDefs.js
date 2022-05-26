@@ -33,7 +33,6 @@ const typeDefs = gql`
 
     type Query {
         me: User
-        user(username: String!): User
         game(_id: ID!): Game
         stats(_id: ID!): Stats
     }
