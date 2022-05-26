@@ -15,8 +15,8 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  current_game: [Game.schema],
-  game_stats: [Stats.schema],
+  current_game: Game.schema,
+  game_stats: Stats.schema,
 });
 
 // set up pre-save middleware to create password
