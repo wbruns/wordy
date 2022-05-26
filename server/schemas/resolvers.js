@@ -98,6 +98,17 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    deleteUser: {},
+    deleteUser: async (parents, { username }, context) => {
+      if (context.user) {
+        const deletedUser = await User.findOneAndDelete(
+          { username: username },
+          { new: true }
+        );
+        return deletedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
   },
 };
+
+module.exports = resolvers;
