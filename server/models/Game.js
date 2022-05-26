@@ -1,4 +1,6 @@
-const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
+
+const { Schema } = mongoose;
 
 const gameSchema = new Schema({
   current_word: {
@@ -18,10 +20,10 @@ const gameSchema = new Schema({
   },
   game_date: {
     type: Date,
+    default: Date.now
   },
   current_date: {
-    type: Date,
-    default: Date.now,
+    type: Date
   },
   game_finished: {
     type: Boolean,
@@ -29,4 +31,6 @@ const gameSchema = new Schema({
   },
 });
 
-module.exports = gameSchema;
+const Game = mongoose.model('Game', gameSchema);
+
+module.exports = Game;

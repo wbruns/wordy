@@ -1,4 +1,6 @@
-const { Schema } = require("mongoose");
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const statsSchema = new Schema({
   games_played: {
@@ -12,4 +14,6 @@ const statsSchema = new Schema({
   },
 });
 
-module.exports = statsSchema;
+const Stats = mongoose.model('Stats', statsSchema);
+
+module.exports = Stats;
