@@ -10,7 +10,6 @@ const typeDefs = gql`
   }
 
   type Game {
-    _id: ID
     game_username: String
     current_word: [String]
     todays_word: [String]

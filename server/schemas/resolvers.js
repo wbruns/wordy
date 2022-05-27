@@ -110,11 +110,26 @@ const resolvers = {
     },
     deleteUser: async (parents, { username }, context) => {
       if (context.user) {
-        const deletedUser = await User.findOneAndDelete(
-          { username: username },
-          { new: true }
-        );
+        const deletedUser = await User.findOneAndDelete({ username: username });
         return deletedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteGame: async (parents, { game_username }, context) => {
+      if (context.user) {
+        const deletedGame = await Game.findOneAndDelete({
+          game_username: game_username,
+        });
+        return deletedGame;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    deleteStats: async (parents, { stats_username }, context) => {
+      if (context.user) {
+        const deletedStats = await Stats.findOneAndDelete({
+          stats_username: stats_username,
+        });
+        return deletedStats;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
