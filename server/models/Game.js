@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-
-const { Schema } = mongoose;
+const { Schema, model } = require("mongoose");
 
 const gameSchema = new Schema({
   current_word: {
@@ -31,6 +29,6 @@ const gameSchema = new Schema({
   },
 });
 
-const Game = mongoose.model('Game', gameSchema);
+const Game = model('Game', gameSchema);
 
 module.exports = Game;

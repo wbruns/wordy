@@ -4,8 +4,8 @@ const typeDefs = gql`
     type User {
         _id: ID
         username: String
-        current_game: [Game]
-        game_stats: [Stats]
+        current_game: Game
+        game_stats: Stats
     }
 
     type Game {
@@ -40,7 +40,17 @@ const typeDefs = gql`
     type Mutation {
         addUser(username: String!, password: String!): Auth
         login(username: String!, password: String!): Auth
-        updateGame(_id: ID!): Game
+        createGame(username: String!): Game
+        createStats(username: String!): Stats
+        updateGame(_id: ID!, 
+            current_word: [String],
+            todays_word: [String],
+            incorrect_letters_guessed: [String],
+            correct_letters_guessed: [String],
+            potential_words: [String],
+            game_date: String,
+            current_date: String,
+            game_finished: Boolean): Game
         updateStats(_id: ID!): Stats
         deleteUser(username: String!): User
     }
