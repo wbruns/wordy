@@ -1,6 +1,12 @@
 const { Schema, model } = require("mongoose");
 
 const gameSchema = new Schema({
+  game_username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
   current_word: {
     type: Array,
   },
@@ -11,9 +17,6 @@ const gameSchema = new Schema({
     type: Array,
   },
   correct_letters_guessed: {
-    type: Array,
-  },
-  potential_words: {
     type: Array,
   },
   game_date: {

@@ -11,6 +11,7 @@ const typeDefs = gql`
 
   type Game {
     _id: ID
+    game_username: String
     current_word: [String]
     todays_word: [String]
     incorrect_letters_guessed: [String]
@@ -22,6 +23,7 @@ const typeDefs = gql`
   }
 
   type Stats {
+    stats_username: String
     games_played: Int
     games_won: Int
     current_streak: Int
@@ -44,12 +46,10 @@ const typeDefs = gql`
     createGame(username: String!): Game
     createStats(username: String!): Stats
     updateGame(
-      _id: ID!
       current_word: [String]
       todays_word: [String]
       incorrect_letters_guessed: [String]
       correct_letters_guessed: [String]
-      potential_words: [String]
       game_date: String
       current_date: String
       game_finished: Boolean
