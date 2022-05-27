@@ -18,10 +18,11 @@ const gameSchema = new Schema({
   },
   game_date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   current_date: {
-    type: Date
+    type: Date,
+    default: Date.now,
   },
   game_finished: {
     type: Boolean,
@@ -29,6 +30,6 @@ const gameSchema = new Schema({
   },
 });
 
-const Game = model('Game', gameSchema);
+const Game = model("Game", gameSchema);
 
 module.exports = Game;
