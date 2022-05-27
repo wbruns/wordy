@@ -13,11 +13,11 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in!");
     },
-    game: async (parent, { _id }) => {
-      return Game.findOne({ _id });
+    game: async (parent, { game_username }) => {
+      return Game.findOne({ game_username });
     },
-    stats: async (parent, { _id }) => {
-      return Stats.findOne({ _id });
+    stats: async (parent, { stats_username }) => {
+      return Stats.findOne({ stats_username });
     },
   },
 
@@ -43,14 +43,14 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    createGame: async ( parent, args, context ) => {
+    createGame: async (parent, args, context) => {
       if (context.user) {
         const newGame = await Game.create(args);
 
         return newGame;
       }
     },
-    createStats: async ( parent, args, context ) => {
+    createStats: async (parent, args, context) => {
       if (context.user) {
         const newStats = await Stats.create(args);
 
@@ -60,7 +60,7 @@ const resolvers = {
     updateGame: async (
       parent,
       {
-        gameId,
+        game_username,
         current_word,
         todays_word,
         incorrect_letters_guessed,
@@ -73,17 +73,15 @@ const resolvers = {
     ) => {
       if (context.user) {
         const updatedGame = await Game.findOneAndUpdate(
-          { _id: gameId },
+          { game_username: game_username },
           {
-            $set: {
-              current_word: current_word,
-              todays_word: todays_word,
-              incorrect_letters_guessed: incorrect_letters_guessed,
-              correct_letters_guessed: correct_letters_guessed,
-              game_date: game_date,
-              current_date: current_date,
-              game_finished: game_finished,
-            },
+            current_word: current_word,
+            todays_word: todays_word,
+            incorrect_letters_guessed: incorrect_letters_guessed,
+            correct_letters_guessed: correct_letters_guessed,
+            game_date: game_date,
+            current_date: current_date,
+            game_finished: game_finished,
           },
           { new: true }
         );
@@ -93,18 +91,16 @@ const resolvers = {
     },
     updateStats: async (
       parents,
-      { statsId, games_played, games_won, current_streak },
+      { stats_username, games_played, games_won, current_streak },
       context
     ) => {
       if (context.user) {
         const updatedStats = await Stats.findOneAndUpdate(
-          { _id: statsId },
+          { stats_username: stats_username },
           {
-            $set: {
-              games_played: games_played,
-              games_won: games_won,
-              current_streak: current_streak,
-            },
+            games_played: games_played,
+            games_won: games_won,
+            current_streak: current_streak,
           },
           { new: true }
         );

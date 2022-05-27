@@ -36,16 +36,17 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    game(_id: ID!): Game
-    stats(_id: ID!): Stats
+    game(game_username: String!): Game
+    stats(stats_username: String!): Stats
   }
 
   type Mutation {
     addUser(username: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
-    createGame(username: String!): Game
-    createStats(username: String!): Stats
+    createGame(game_username: String!): Game
+    createStats(stats_username: String!): Stats
     updateGame(
+      game_username: String!
       current_word: [String]
       todays_word: [String]
       incorrect_letters_guessed: [String]
@@ -54,8 +55,15 @@ const typeDefs = gql`
       current_date: String
       game_finished: Boolean
     ): Game
-    updateStats(_id: ID!): Stats
+    updateStats(
+      stats_username: String!
+      games_played: Int
+      games_won: Int
+      current_streak: Int
+    ): Stats
     deleteUser(username: String!): User
+    deleteGame(game_username: String!): Game
+    deleteStats(stats_username: String!): Stats
   }
 `;
 
