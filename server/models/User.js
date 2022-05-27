@@ -13,14 +13,6 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  current_game: {
-    type: Schema.Types.ObjectId,
-    ref: "Game",
-  },
-  game_stats: {
-    type: Schema.Types.ObjectId,
-    ref: "Stats",
-  },
 });
 
 // set up pre-save middleware to create password
