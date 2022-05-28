@@ -61,3 +61,5 @@ function Signup(props) {
         </div>
     )
 }
+
+export default Signup;
