@@ -15,6 +15,7 @@ const Header = () => {
                     <h1>Wordy</h1>
                 </Link>
                 <nav>
+                    <Link to="/about">About</Link>
                     {Auth.loggedIn() ? (
                         <>
                             <Link to="/profile">Profile</Link>
