@@ -2,8 +2,9 @@ import React, {useState} from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import Auth from '../utils/auth';
-import { ADD_USER, CREATE_GAME, CREATE_STATS } from "../utils/mutations";
+import { ADD_USER, CREATE_GAME, CREATE_STATS, UPDATE_GAME } from "../utils/mutations";
 import { QUERY_GAME } from "../utils/queries";
+import { getWord } from '../utils/getWord';
 
 function Signup(props) {
     const [formState, setFormState] = useState({ username: '', password: '' });
@@ -11,6 +12,7 @@ function Signup(props) {
 
     const [createGame] = useMutation(CREATE_GAME);
     const [createStats] = useMutation(CREATE_STATS);
+    const [updateGame, { error }] = useMutation(UPDATE_GAME);
 
     
 
@@ -32,10 +34,35 @@ function Signup(props) {
                 game_username: username
             }
         });
-        
-        const { loading, data } = useQuery(QUERY_GAME, {
-            variables: { game_username: username }
+
+        createStats({
+            variables: {
+                stats_username: username
+            }
         });
+
+        const { todays_word, current_word} = getWord();
+
+        console.log(todays_word, current_word);
+
+        try {
+            const { data } = await updateGame({
+                variables: {
+                    game_username: username,
+                    todays_word: todays_word,
+                    current_word: current_word
+                }
+            });
+
+            if (data) {
+                console.log("data", data);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        
+
+        
         
 
 
