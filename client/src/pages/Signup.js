@@ -1,12 +1,18 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { Link, Navigate } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from '../utils/auth';
-import { ADD_USER } from "../utils/mutations";
+import { ADD_USER, CREATE_GAME, CREATE_STATS } from "../utils/mutations";
+import { QUERY_GAME } from "../utils/queries";
 
 function Signup(props) {
-    const {formState, setFormState} = useState({ username: '', password: '' });
+    const [formState, setFormState] = useState({ username: '', password: '' });
     const [addUser] = useMutation(ADD_USER);
+
+    const [createGame] = useMutation(CREATE_GAME);
+    const [createStats] = useMutation(CREATE_STATS);
+
+    
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -18,6 +24,21 @@ function Signup(props) {
         });
         const token = mutationResponse.data.addUser.token;
         Auth.login(token);
+        // <Navigate to ="/game" />
+        const username = Auth.getProfile(token).data.username;
+
+        createGame({
+            variables: {
+                game_username: username
+            }
+        });
+        
+        const { loading, data } = useQuery(QUERY_GAME, {
+            variables: { game_username: username }
+        });
+        
+
+
     };
 
     const handleChange = (event) => {

@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Game = () => {
     const word_bank = [
         "family",
@@ -12,14 +13,21 @@ const Game = () => {
         "reach",
         "movie",
         "admire"];
-        
+
     const todays_word = word_bank[Math.floor(Math.random() * word_bank.length)];
     console.log(todays_word);
 
     return (
+        <main>
+            <div>
+                GAME TIME
+            </div>
         <div>
-            GAME TIME
+
         </div>
+            <img src={require("../assets/Image_1.jpg")} alt={"Carlie Anglemire"}/>
+        </main>
+        
     );
 };
 
