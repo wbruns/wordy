@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Auth from '../utils/auth';
 
         // const { loading, data } = useQuery(QUERY_GAME, {
         //     variables: { game_username: username }
@@ -7,6 +8,9 @@ import React, { useState } from 'react';
 const Game = () => {
     const [formState, setFormState] = useState({guess: ''});
 
+    const username = Auth.getProfile().data.username;
+
+    console.log(username);
     
 
     const handleChange = (event) => {
@@ -21,6 +25,8 @@ const Game = () => {
     
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+
+        formState.guess = formState.guess.toUpperCase();
 
         console.log(formState.guess);
 
