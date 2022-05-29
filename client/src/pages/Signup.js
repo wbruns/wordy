@@ -1,12 +1,20 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { Link, Navigate } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from '../utils/auth';
-import { ADD_USER } from "../utils/mutations";
+import { ADD_USER, CREATE_GAME, CREATE_STATS, UPDATE_GAME } from "../utils/mutations";
+import { QUERY_GAME } from "../utils/queries";
+import { getWord } from '../utils/getWord';
 
 function Signup(props) {
-    const {formState, setFormState} = useState({ username: '', password: '' });
+    const [formState, setFormState] = useState({ username: '', password: '' });
     const [addUser] = useMutation(ADD_USER);
+
+    const [createGame] = useMutation(CREATE_GAME);
+    const [createStats] = useMutation(CREATE_STATS);
+    const [updateGame, { error }] = useMutation(UPDATE_GAME);
+
+    
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -18,6 +26,46 @@ function Signup(props) {
         });
         const token = mutationResponse.data.addUser.token;
         Auth.login(token);
+        // <Navigate to ="/game" />
+        const username = Auth.getProfile(token).data.username;
+
+        createGame({
+            variables: {
+                game_username: username
+            }
+        });
+
+        createStats({
+            variables: {
+                stats_username: username
+            }
+        });
+
+        const { todays_word, current_word} = getWord();
+
+        console.log(todays_word, current_word);
+
+        try {
+            const { data } = await updateGame({
+                variables: {
+                    game_username: username,
+                    todays_word: todays_word,
+                    current_word: current_word
+                }
+            });
+
+            if (data) {
+                console.log("data", data);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        
+
+        
+        
+
+
     };
 
     const handleChange = (event) => {
