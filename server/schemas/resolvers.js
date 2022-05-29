@@ -66,7 +66,6 @@ const resolvers = {
         incorrect_letters_guessed,
         correct_letters_guessed,
         game_date,
-        current_date,
         game_finished,
       },
       context
@@ -80,7 +79,6 @@ const resolvers = {
             incorrect_letters_guessed: incorrect_letters_guessed,
             correct_letters_guessed: correct_letters_guessed,
             game_date: game_date,
-            current_date: current_date,
             game_finished: game_finished,
           },
           { new: true }

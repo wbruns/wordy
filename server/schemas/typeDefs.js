@@ -17,7 +17,6 @@ const typeDefs = gql`
     correct_letters_guessed: [String]
     potential_words: [String]
     game_date: String
-    current_date: String
     game_finished: Boolean
   }
 
@@ -51,7 +50,6 @@ const typeDefs = gql`
       incorrect_letters_guessed: [String]
       correct_letters_guessed: [String]
       game_date: String
-      current_date: String
       game_finished: Boolean
     ): Game
     updateStats(

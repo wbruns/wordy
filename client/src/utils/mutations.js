@@ -34,7 +34,6 @@ export const CREATE_GAME = gql`
       incorrect_letters_guessed
       correct_letters_guessed
       game_date
-      current_date
       game_finished
     }
   }
@@ -42,23 +41,21 @@ export const CREATE_GAME = gql`
 
 export const UPDATE_GAME = gql`
   mutation updateGame(
-    $game_username: String!,
-    $current_word: [String],
-    $todays_word: [String],
-    $incorrect_letters_guessed: [String],
-    $correct_letters_guessed: [String],
-    $game_date: String,
-    $current_date: String,
+    $game_username: String!
+    $current_word: [String]
+    $todays_word: [String]
+    $incorrect_letters_guessed: [String]
+    $correct_letters_guessed: [String]
+    $game_date: String
     $game_finished: Boolean
   ) {
     updateGame(
-      game_username: $game_username,
-      current_word: $current_word,
-      todays_word: $todays_word,
-      incorrect_letters_guessed: $incorrect_letters_guessed,
-      correct_letters_guessed: $correct_letters_guessed,
-      game_date: $game_date,
-      current_date: $current_date,
+      game_username: $game_username
+      current_word: $current_word
+      todays_word: $todays_word
+      incorrect_letters_guessed: $incorrect_letters_guessed
+      correct_letters_guessed: $correct_letters_guessed
+      game_date: $game_date
       game_finished: $game_finished
     ) {
       game_username
@@ -67,7 +64,6 @@ export const UPDATE_GAME = gql`
       incorrect_letters_guessed
       correct_letters_guessed
       game_date
-      current_date
       game_finished
     }
   }
@@ -86,15 +82,15 @@ export const CREATE_STATS = gql`
 
 export const UPDATE_STATS = gql`
   mutation updateStats(
-    $stats_username: String!,
-    $games_played: Int,
-    $games_won: Int,
+    $stats_username: String!
+    $games_played: Int
+    $games_won: Int
     $current_streak: Int
   ) {
     updateStats(
-      stats_username: $stats_username,
-      games_played: $games_played,
-      games_won: $games_won,
+      stats_username: $stats_username
+      games_played: $games_played
+      games_won: $games_won
       current_streak: $current_streak
     ) {
       stats_username
