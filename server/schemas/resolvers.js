@@ -44,18 +44,14 @@ const resolvers = {
       return { token, user };
     },
     createGame: async (parent, args, context) => {
-      if (context.user) {
         const newGame = await Game.create(args);
 
         return newGame;
-      }
     },
     createStats: async (parent, args, context) => {
-      if (context.user) {
         const newStats = await Stats.create(args);
 
         return newStats;
-      }
     },
     updateGame: async (
       parent,

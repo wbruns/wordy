@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import Auth from '../utils/auth';
 import { ADD_USER, CREATE_GAME, CREATE_STATS, UPDATE_GAME } from "../utils/mutations";
 import { QUERY_GAME } from "../utils/queries";
-import { getWord } from '../utils/getWord';
+import { getWord } from '../utils/wordFunctions';
 
 function Signup(props) {
     const [formState, setFormState] = useState({ username: '', password: '' });
@@ -14,7 +14,8 @@ function Signup(props) {
     const [createStats] = useMutation(CREATE_STATS);
     const [updateGame, { error }] = useMutation(UPDATE_GAME);
 
-    
+    let correct_letters_guessed = [];
+    let incorrect_letters_guessed = [];
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -25,9 +26,12 @@ function Signup(props) {
             },
         });
         const token = mutationResponse.data.addUser.token;
-        Auth.login(token);
+        
         // <Navigate to ="/game" />
-        const username = Auth.getProfile(token).data.username;
+        // const username = Auth.getProfile(token).data.username;
+
+        const username = formState.username;
+        console.log(username);
 
         createGame({
             variables: {
@@ -45,12 +49,16 @@ function Signup(props) {
 
         console.log(todays_word, current_word);
 
+        Auth.login(token);
+
         try {
             const { data } = await updateGame({
                 variables: {
                     game_username: username,
                     todays_word: todays_word,
-                    current_word: current_word
+                    current_word: current_word,
+                    correct_letters_guessed: correct_letters_guessed,
+                    incorrect_letters_guessed: incorrect_letters_guessed
                 }
             });
 
