@@ -12,13 +12,13 @@ const Game = () => {
   console.log(username);
 
   const imageArray = [
-    "../assets/Image_1.jpg",
-    "../assets/Image_2.jpg",
-    "../assets/Image_3.jpg",
-    "../assets/Image_4.jpg",
-    "../assets/Image_5.jpg",
-    "../assets/Image_6.jpg",
-    "../assets/Image_7.jpg",
+    "Image_1.jpg",
+    "Image_2.jpg",
+    "Image_3.jpg",
+    "Image_4.jpg",
+    "Image_5.jpg",
+    "Image_6.jpg",
+    "Image_7.jpg",
   ];
 
   let imageIndex = 0;
@@ -47,8 +47,8 @@ const Game = () => {
       <div>
         <img
           id="hangman"
-          src={require(imageArray[imageIndex])}
-          alt={"Carlie Anglemire"}
+          src={require(`../assets/${imageArray[imageIndex]}`)}
+          alt="Carlie Anglemire"
         />
       </div>
       <div>

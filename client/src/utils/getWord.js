@@ -11,9 +11,11 @@ export function getWord() {
         "movie",
         "admire"];
 
-    const todays_word = word_bank[Math.floor(Math.random() * word_bank.length)];
+    let todays_word = word_bank[Math.floor(Math.random() * word_bank.length)];
 
-    const word_length = todays_word.split('').length;
+    todays_word = todays_word.split('');
+
+    const word_length = todays_word.length;
 
     const current_word = [];
 
