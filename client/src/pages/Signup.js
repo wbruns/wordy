@@ -14,7 +14,8 @@ function Signup(props) {
     const [createStats] = useMutation(CREATE_STATS);
     const [updateGame, { error }] = useMutation(UPDATE_GAME);
 
-    
+    let correct_letters_guessed = [];
+    let incorrect_letters_guessed = [];
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -55,7 +56,9 @@ function Signup(props) {
                 variables: {
                     game_username: username,
                     todays_word: todays_word,
-                    current_word: current_word
+                    current_word: current_word,
+                    correct_letters_guessed: correct_letters_guessed,
+                    incorrect_letters_guessed: incorrect_letters_guessed
                 }
             });
 

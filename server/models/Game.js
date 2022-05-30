@@ -17,11 +17,9 @@ const gameSchema = new Schema(
     },
     incorrect_letters_guessed: {
       type: Array,
-      default: []
     },
     correct_letters_guessed: {
       type: Array,
-      default: []
     },
     game_date: {
       type: Date,
