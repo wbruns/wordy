@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const Home = () => {
     return (
@@ -19,6 +20,15 @@ const Home = () => {
 
                 Good luck playing!
             </p>
+            {
+                Auth.loggedIn() ? (
+                    <button className="game-button">
+                        <Link to="/game">Play Now!</Link>
+                    </button>
+                ) : (
+                    <p>Login to play!</p>
+                )
+            }
         </main>
     );
 };
