@@ -34,6 +34,19 @@ header a {
   text-decoration: none;
 }
 
+main {
+  text-align: center;
+}
+
+footer {
+  margin: auto;
+  width: 50%;
+}
+
+.footer-text {
+  text-align: center;
+}
+
 .flex-row {
   display: flex;
   flex-wrap: wrap;
