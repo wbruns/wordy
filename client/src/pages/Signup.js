@@ -33,11 +33,15 @@ function Signup(props) {
         const username = formState.username;
         console.log(username);
 
-        createGame({
+        const { data: newGame } = await createGame({
             variables: {
                 game_username: username
             }
         });
+
+        if (newGame) {
+            console.log(newGame);
+        }
 
         createStats({
             variables: {

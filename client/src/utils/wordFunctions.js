@@ -1,15 +1,15 @@
 export function getWord() {
     const word_bank = [
-        "family",
-        "offense",
-        "sugar",
-        "mouth",
-        "addition",
-        "escape",
-        "patience",
-        "reach",
-        "movie",
-        "admire"];
+        "FAMILY",
+        "OFFENSE",
+        "SUGAR",
+        "MOUTH",
+        "ADDITION",
+        "ESCAPE",
+        "PATIENCE",
+        "REACH",
+        "MOVIE",
+        "ADMIRE"];
 
     let todays_word = word_bank[Math.floor(Math.random() * word_bank.length)];
 

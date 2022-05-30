@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_GAME } from '../utils/queries';
+import { UPDATE_GAME } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { checkLetters } from "../utils/wordFunctions";
 
@@ -8,7 +9,7 @@ import { checkLetters } from "../utils/wordFunctions";
 
 const Game = () => {
   const [formState, setFormState] = useState({ guess: "" });
-  
+  const [updateGame, { error }] = useMutation(UPDATE_GAME);
 
   const username = Auth.getProfile().data.username;
 
@@ -93,6 +94,23 @@ const Game = () => {
         // have a modal pop up?
         console.log("Winner!");
       }
+
+      try {
+        const { data } = await updateGame({
+            variables: {
+                game_username: username,
+                current_word: current_word,
+                correct_letters_guessed: correct_letters_guessed
+            }
+        });
+
+        if (data) {
+            console.log("data", data);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+
     } else {
       // Push the letter into the incorrect_letters_guessed array
       incorrect_letters_guessed.push(guess);
@@ -104,6 +122,21 @@ const Game = () => {
         // have a modal pop up?
         console.log("You lose!")
       }
+
+      try {
+        const { data } = await updateGame({
+            variables: {
+                game_username: username,
+                incorrect_letters_guessed: incorrect_letters_guessed
+            }
+        });
+
+        if (data) {
+            console.log("data", data);
+        }
+    } catch (e) {
+        console.error(e);
+    }
     }
   };
 
