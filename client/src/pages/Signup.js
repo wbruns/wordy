@@ -1,121 +1,120 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
-import Auth from '../utils/auth';
-import { ADD_USER, CREATE_GAME, CREATE_STATS, UPDATE_GAME } from "../utils/mutations";
+import Auth from "../utils/auth";
+import {
+  ADD_USER,
+  CREATE_GAME,
+  CREATE_STATS,
+  UPDATE_GAME,
+} from "../utils/mutations";
 import { QUERY_GAME } from "../utils/queries";
-import { getWord } from '../utils/wordFunctions';
+import { getWord } from "../utils/wordFunctions";
 
 function Signup(props) {
-    const [formState, setFormState] = useState({ username: '', password: '' });
-    const [addUser] = useMutation(ADD_USER);
+  const [formState, setFormState] = useState({ username: "", password: "" });
+  const [addUser] = useMutation(ADD_USER);
 
-    const [createGame] = useMutation(CREATE_GAME);
-    const [createStats] = useMutation(CREATE_STATS);
-    const [updateGame, { error }] = useMutation(UPDATE_GAME);
+  const [createGame] = useMutation(CREATE_GAME);
+  const [createStats] = useMutation(CREATE_STATS);
+  const [updateGame, { error }] = useMutation(UPDATE_GAME);
 
-    let correct_letters_guessed = [];
-    let incorrect_letters_guessed = [];
+  let correct_letters_guessed = [];
+  let incorrect_letters_guessed = [];
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        const mutationResponse = await addUser({
-            variables: {
-                username: formState.username,
-                password: formState.password,
-            },
-        });
-        const token = mutationResponse.data.addUser.token;
-        
-        // <Navigate to ="/game" />
-        // const username = Auth.getProfile(token).data.username;
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const mutationResponse = await addUser({
+      variables: {
+        username: formState.username,
+        password: formState.password,
+      },
+    });
+    const token = mutationResponse.data.addUser.token;
 
-        const username = formState.username;
-        console.log(username);
+    // <Navigate to ="/game" />
+    // const username = Auth.getProfile(token).data.username;
 
-        createGame({
-            variables: {
-                game_username: username
-            }
-        });
+    const username = formState.username;
+    console.log(username);
 
-        createStats({
-            variables: {
-                stats_username: username
-            }
-        });
+    createGame({
+      variables: {
+        game_username: username,
+      },
+    });
 
-        const { todays_word, current_word} = getWord();
+    createStats({
+      variables: {
+        stats_username: username,
+      },
+    });
 
-        console.log(todays_word, current_word);
+    const { todays_word, current_word } = getWord();
 
-        Auth.login(token);
+    console.log(todays_word, current_word);
 
-        try {
-            const { data } = await updateGame({
-                variables: {
-                    game_username: username,
-                    todays_word: todays_word,
-                    current_word: current_word,
-                    correct_letters_guessed: correct_letters_guessed,
-                    incorrect_letters_guessed: incorrect_letters_guessed
-                }
-            });
+    Auth.login(token);
 
-            if (data) {
-                console.log("data", data);
-            }
-        } catch (e) {
-            console.error(e);
-        }
-        
+    try {
+      const { data } = await updateGame({
+        variables: {
+          game_username: username,
+          todays_word: todays_word,
+          current_word: current_word,
+          correct_letters_guessed: correct_letters_guessed,
+          incorrect_letters_guessed: incorrect_letters_guessed,
+        },
+      });
 
-        
-        
+      if (data) {
+        console.log("data", data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
-    };
+  return (
+    <div className="container">
+      <Link to="/login">← Go to Login</Link>
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
-    };
-
-    return (
-        <div className="container">
-            <Link to="/login">← Go to Login</Link>
-
-            <h2>Signup</h2>
-            <form onSubmit={handleFormSubmit}>
-                <div className="flex-row">
-                    <label htmlFor="user">Username</label>
-                    <input 
-                        placeholder="username"
-                        name="username"
-                        type="username"
-                        id="user"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="flex-row">
-                    <label htmlFor="pwd">Password:</label>
-                    <input
-                        placeholder="******"
-                        name="password"
-                        type="password"
-                        id="pwd"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="flex-row flex-end">
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+      <h2>Signup</h2>
+      <form onSubmit={handleFormSubmit}>
+        <div className="flex-row">
+          <label htmlFor="user">Username</label>
+          <input
+            placeholder="username"
+            name="username"
+            type="username"
+            id="user"
+            onChange={handleChange}
+          />
         </div>
-    )
+        <div className="flex-row">
+          <label htmlFor="pwd">Password:</label>
+          <input
+            placeholder="******"
+            name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex-row flex-end">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default Signup;
