@@ -38,6 +38,16 @@ main {
   text-align: center;
 }
 
+button {
+  font-weight: 500;
+  padding: 0.025rem 1rem;
+  margin: 0.35rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  background-color: var(--secondary);
+}
+
 footer {
   margin: auto;
   width: 50%;
