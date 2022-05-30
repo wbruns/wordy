@@ -25,9 +25,6 @@ const Header = () => {
                                         Logout
                                     </a>
                                 </li>
-                                <li className="mx-1 flex-end">
-                                    <Link to="/game">Play Now!</Link>
-                                </li>
                             </>
                         ) : (
                             <>

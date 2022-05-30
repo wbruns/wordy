@@ -22,7 +22,7 @@ code {
 ul {
   list-style-type: none;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  padding-left: 1rem;
 }
 
 header {
@@ -32,6 +32,7 @@ header {
 header a {
   color: var(--tertiary);
   text-decoration: none;
+  padding-left: 0.75rem;
 }
 
 main {
@@ -53,6 +54,16 @@ footer {
   width: 50%;
 }
 
+.game-button {
+  background-color: var(--start);
+}
+
+.game-button a {
+  text-decoration: none;
+  font-size: x-large;
+  color: white;
+}
+
 .footer-text {
   text-align: center;
 }
@@ -62,7 +73,8 @@ footer {
   flex-wrap: wrap;
 }
 
-.flex-end {
-  color: var(--start);
-  font-weight: bolder;
+@media screen and (max-width: 768px) {
+  header a {
+    margin-top: 0.5rem;
+  }
 }
