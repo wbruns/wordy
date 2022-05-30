@@ -9,28 +9,38 @@ const Header = () => {
     };
 
     return (
-        <header>
-            <div>
+        <header className="flex-row px-1">
                 <Link to="/">
                     <h1>Wordy</h1>
                 </Link>
                 <nav>
-                    <Link to="/game">Game</Link>
-                    {Auth.loggedIn() ? (
-                        <>
-                            <Link to="/profile">Profile</Link>
-                            <a href="/" onClick={logout}>
-                                Logout
-                            </a>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/login">Login</Link>
-                            <Link to="/signup">Signup</Link>
-                        </>
-                    )}
+                    <ul className="flex-row">
+                        {Auth.loggedIn() ? (
+                            <>
+                                <li className="mx-1">
+                                    <Link to="/profile">Profile</Link>
+                                </li>
+                                <li className="mx-1">
+                                    <a href="/" onClick={logout}>
+                                        Logout
+                                    </a>
+                                </li>
+                                <li className="mx-1 flex-end">
+                                    <Link to="/game">Play Now!</Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="mx-1">
+                                    <Link to="/login">Login</Link>
+                                </li>
+                                <li className="mx-1">
+                                    <Link to="/signup">Signup</Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
                 </nav>
-            </div>
         </header>
     );
 };
