@@ -25,3 +25,10 @@ export function getWord() {
 
     return { todays_word, current_word }
 };
+
+// This checks to see if at least one letter matches the user's input. If it does, then it returns true.
+export function checkLetters(array, letter) {
+  return array.some(function (solution) {
+    return letter === solution;
+  });
+};

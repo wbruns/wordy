@@ -1,15 +1,22 @@
 import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_GAME } from '../utils/queries';
 import Auth from "../utils/auth";
+import { checkLetters } from "../utils/wordFunctions";
 
-// const { loading, data } = useQuery(QUERY_GAME, {
-//     variables: { game_username: username }
-// });
+
 
 const Game = () => {
   const [formState, setFormState] = useState({ guess: "" });
+  
 
   const username = Auth.getProfile().data.username;
-  console.log(username);
+
+  const { loading, data: gameData } = useQuery(QUERY_GAME, {
+      variables: { game_username: username }
+  });
+
+  console.log(gameData);
 
   const imageArray = [
     "Image_1.jpg",
@@ -21,7 +28,7 @@ const Game = () => {
     "Image_7.jpg",
   ];
 
-  let imageIndex = 0;
+  let imageIndex = 4;
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -39,6 +46,10 @@ const Game = () => {
     formState.guess = formState.guess.toUpperCase();
 
     console.log(formState.guess);
+    
+    console.log(checkLetters(gameData.game.correct_letters_guessed , formState.guess));
+
+    checkLetters(gameData.game.incorrect_letters_guessed , formState.guess);
   };
 
   return (

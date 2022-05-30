@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import Auth from '../utils/auth';
 import { ADD_USER, CREATE_GAME, CREATE_STATS, UPDATE_GAME } from "../utils/mutations";
 import { QUERY_GAME } from "../utils/queries";
-import { getWord } from '../utils/getWord';
+import { getWord } from '../utils/wordFunctions';
 
 function Signup(props) {
     const [formState, setFormState] = useState({ username: '', password: '' });
@@ -25,9 +25,12 @@ function Signup(props) {
             },
         });
         const token = mutationResponse.data.addUser.token;
-        Auth.login(token);
+        
         // <Navigate to ="/game" />
-        const username = Auth.getProfile(token).data.username;
+        // const username = Auth.getProfile(token).data.username;
+
+        const username = formState.username;
+        console.log(username);
 
         createGame({
             variables: {
@@ -44,6 +47,8 @@ function Signup(props) {
         const { todays_word, current_word} = getWord();
 
         console.log(todays_word, current_word);
+
+        Auth.login(token);
 
         try {
             const { data } = await updateGame({

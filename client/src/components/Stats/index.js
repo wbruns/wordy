@@ -27,7 +27,7 @@ const Stats = (username) => {
     return (
         <div>
             <h3>Your Stats</h3>
-            {data ? (
+            {data.stats ? (
                 <div>
                     <div>
                         <p>Current streak: {data.stats.current_streak}</p>
