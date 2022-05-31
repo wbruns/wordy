@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
 import {
   ADD_USER,
@@ -8,7 +8,6 @@ import {
   CREATE_STATS,
   UPDATE_GAME,
 } from "../utils/mutations";
-import { QUERY_GAME } from "../utils/queries";
 import { getWord } from "../utils/wordFunctions";
 
 function Signup(props) {
@@ -17,10 +16,7 @@ function Signup(props) {
 
   const [createGame] = useMutation(CREATE_GAME);
   const [createStats] = useMutation(CREATE_STATS);
-  const [updateGame, { error }] = useMutation(UPDATE_GAME);
-
-  let correct_letters_guessed = [];
-  let incorrect_letters_guessed = [];
+  const [updateGame] = useMutation(UPDATE_GAME);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -66,8 +62,10 @@ function Signup(props) {
           game_username: username,
           todays_word: todays_word,
           current_word: current_word,
-          correct_letters_guessed: correct_letters_guessed,
-          incorrect_letters_guessed: incorrect_letters_guessed,
+          correct_letters_guessed: newGame.createGame.correct_letters_guessed,
+          incorrect_letters_guessed: newGame.createGame.incorrect_letters_guessed,
+          game_date: newGame.createGame.game_date,
+          game_finished: newGame.createGame.game_finished
         },
       });
 
