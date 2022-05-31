@@ -182,8 +182,6 @@ const Game = () => {
       });
     }
   };
-<<<<<<< HEAD
-=======
 
   //src={require(`../assets/${imageArray[imageIndex]}`)}
 
@@ -193,18 +191,13 @@ const Game = () => {
     )
   }
 
->>>>>>> b21e8edb13af75e35bb091e5a15e341e21717c2e
   return (
     <main>
       <div>GAME TIME</div>
       <div>
         <img
           id="hangman"
-<<<<<<< HEAD
-          src={require(`../assets/${imageArray[imageIndex]}`)}
-=======
           src={require(`../assets/${imageArray[gameData.game.incorrect_letters_guessed.length || 0]}`)}
->>>>>>> b21e8edb13af75e35bb091e5a15e341e21717c2e
           alt="Carlie Anglemire"
         />
       </div>
