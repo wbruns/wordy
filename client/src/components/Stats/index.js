@@ -1,20 +1,25 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_STATS } from '../../utils/queries';
-import { DELETE_STATS } from '../../utils/mutations';
+import { UPDATE_STATS } from '../../utils/mutations';
 
 const Stats = (username) => {
 
     console.log(username.username);
-    const [deleteStats] = useMutation(DELETE_STATS, { variables: { stats_username: username.username } });
+    const [updateStats] = useMutation(UPDATE_STATS, { variables: { stats_username: username.username } });
     const { loading, data } = useQuery(QUERY_STATS, { variables: { stats_username: username.username } });
 
     console.log(data);
 
     const handleDelete = async (event) => {
 
-        const { data: deletedStats } = await deleteStats({
-            variables: { stats_username: username.username }
+        const { data: deletedStats } = await updateStats({
+            variables: {
+                stats_username: username.username,
+                games_played: 0,
+                games_won: 0,
+                current_streak: 0
+            }
         });
 
         console.log("deleted Stats", deletedStats);
