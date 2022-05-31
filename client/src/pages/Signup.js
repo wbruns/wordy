@@ -28,28 +28,23 @@ function Signup(props) {
     });
     const token = mutationResponse.data.addUser.token;
 
-    // <Navigate to ="/game" />
-    // const username = Auth.getProfile(token).data.username;
-
     const username = formState.username;
-    console.log(username);
 
+    // Creates a new Game object for the new User
     const { data: newGame } = await createGame({
-        variables: {
-            game_username: username
-        }
+      variables: {
+        game_username: username,
+      },
     });
 
-    if (newGame) {
-        console.log("newGame", newGame);
-    }    
-
+    // Creates a new Stats object for the new User
     createStats({
       variables: {
         stats_username: username,
       },
     });
 
+    // Chooses the puzzle word for today's puzzle and transforms it into two arrays of letters
     const { todays_word, current_word } = getWord();
 
     console.log(todays_word, current_word);
@@ -57,21 +52,19 @@ function Signup(props) {
     Auth.login(token);
 
     try {
+      // Adds todays_word and current_word to the Game
       const { data } = await updateGame({
         variables: {
           game_username: username,
           todays_word: todays_word,
           current_word: current_word,
           correct_letters_guessed: newGame.createGame.correct_letters_guessed,
-          incorrect_letters_guessed: newGame.createGame.incorrect_letters_guessed,
+          incorrect_letters_guessed:
+            newGame.createGame.incorrect_letters_guessed,
           game_date: newGame.createGame.game_date,
-          game_finished: newGame.createGame.game_finished
+          game_finished: newGame.createGame.game_finished,
         },
       });
-
-      if (data) {
-        console.log("data", data);
-      }
     } catch (e) {
       console.error(e);
     }
