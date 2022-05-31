@@ -1,21 +1,57 @@
 import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { UPDATE_GAME } from "../utils/mutations";
-import { QUERY_GAME } from "../utils/queries";
+import { UPDATE_GAME, UPDATE_STATS } from "../utils/mutations";
+import { QUERY_GAME, QUERY_STATS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { checkLetters } from "../utils/wordFunctions";
+import { Navigate } from "react-router-dom";
 
 const Game = () => {
   const [formState, setFormState] = useState({ guess: "" });
-  const [updateGame, { error }] = useMutation(UPDATE_GAME);
+  const [updateGame] = useMutation(UPDATE_GAME);
   const username = Auth.getProfile().data.username;
+  const [updateStats] = useMutation(UPDATE_STATS, { variables: { stats_username: username } });
+  const { data: userStats } = useQuery(QUERY_STATS, { variables: { stats_username: username } });
 
   const { loading, data: gameData } = useQuery(QUERY_GAME, {
     variables: { game_username: username },
   });
 
-  if (!loading) {
-    console.log(gameData);
+  let games_played = userStats?.stats.games_played;
+  let games_won = userStats?.stats.games_won;
+  let current_streak = userStats?.stats.current_streak;
+
+  if (gameData) {
+    
+
+    if (gameData.game.incorrect_letters_guessed.length >= 6) {
+      // End the game - LOSE
+      // have a modal pop up?
+      console.log(gameData);
+
+      updateStats({
+        variables: {
+            stats_username: username,
+            games_played: games_played + 1,
+            games_won: games_won,
+            current_streak: 0
+        }
+      });
+
+      updateGame({
+        variables: {
+          game_username: username,
+          current_word: gameData.game.current_word,
+          correct_letters_guessed: gameData.game.correct_letters_guessed,
+          todays_word: gameData.game.todays_word,
+          incorrect_letters_guessed: gameData.game.incorrect_letters_guessed,
+          game_date: gameData.game.game_date,
+          game_finished: true
+        },
+      });
+
+      return <Navigate to="/profile" />
+    }
   }
 
   const imageArray = [
@@ -28,7 +64,7 @@ const Game = () => {
     "Image_7.jpg",
   ];
 
-  let imageIndex = 0;
+  
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -41,8 +77,8 @@ const Game = () => {
   };
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    debugger;
+    // event.preventDefault();
+    // debugger;
 
     const correct_letters_guessed = [...gameData.game.correct_letters_guessed];
     const incorrect_letters_guessed = [
@@ -61,14 +97,16 @@ const Game = () => {
     let guess = formState.guess;
 
     console.log(guess);
-    let correctCheck = checkLetters(correct_letters_guessed, guess);
 
     let incorrectCheck = checkLetters(incorrect_letters_guessed, guess);
+
+    let correctCheck = checkLetters(correct_letters_guessed, guess);
 
     if (correctCheck || incorrectCheck) {
       // if it's not in either, do the other checks
 
-      console.log("no duplicate guess");
+      alert("You've already guessed this, idiot.");
+      return;
     }
 
     let letterCheck = checkLetters(todays_word, guess);
@@ -86,49 +124,86 @@ const Game = () => {
       correct_letters_guessed.push(guess);
       console.log(correct_letters_guessed);
       // update game call
-      await updateGame({
+      updateGame({
         variables: {
           game_username: username,
           current_word: current_word,
           correct_letters_guessed: correct_letters_guessed,
+          todays_word: gameData.game.todays_word,
+          incorrect_letters_guessed: gameData.game.incorrect_letters_guessed,
+          game_date: gameData.game.game_date,
+          game_finished: gameData.game.game_finished
         },
       });
-      if (todays_word === current_word) {
+
+      if (!current_word.includes('-')) {
         // End the game - WIN!!
         // have a modal pop up?
-        console.log("Winner!");
+        updateStats({
+          variables: {
+              stats_username: username,
+              games_played: games_played + 1,
+              games_won: games_won + 1,
+              current_streak: current_streak + 1
+          }
+        });
+
+        updateGame({
+          variables: {
+            game_username: username,
+            current_word: current_word,
+            correct_letters_guessed: correct_letters_guessed,
+            todays_word: gameData.game.todays_word,
+            incorrect_letters_guessed: gameData.game.incorrect_letters_guessed,
+            game_date: gameData.game.game_date,
+            game_finished: true
+          },
+        });
+
+        return <Navigate to="/profile" />
       }
+
     } else {
       // Push the letter into the incorrect_letters_guessed array
       incorrect_letters_guessed.push(guess);
       console.log(incorrect_letters_guessed);
-      // Change the image
-      imageIndex = imageIndex + 1;
+
       // update game call
-      await updateGame({
+      updateGame({
         variables: {
           game_username: username,
           incorrect_letters_guessed: incorrect_letters_guessed,
+          current_word: gameData.game.current_word,
+          correct_letters_guessed: gameData.game.correct_letters_guessed,
+          todays_word: gameData.game.todays_word,
+          game_date: gameData.game.game_date,
+          game_finished: gameData.game.game_finished
         },
       });
-      if (incorrect_letters_guessed.length === 7) {
-        // End the game - LOSE
-        // have a modal pop up?
-        console.log("You lose!");
-      }
     }
   };
+
   //src={require(`../assets/${imageArray[imageIndex]}`)}
+
+  if (loading) {
+    return (
+      <div>loading</div>
+    )
+  }
+
   return (
     <main>
       <div>GAME TIME</div>
       <div>
         <img
           id="hangman"
-          src={require(`../assets/Image_1.jpg`)}
+          src={require(`../assets/${imageArray[gameData.game.incorrect_letters_guessed.length || 0]}`)}
           alt="Carlie Anglemire"
         />
       </div>
+      <div>{gameData.game.correct_letters_guessed}</div>
+      <div>{gameData.game.incorrect_letters_guessed}</div>
+      <div>{gameData.game.current_word}</div>
       <div>
         <form onSubmit={handleFormSubmit}>
           <label htmlFor="guess">Guess:</label>
