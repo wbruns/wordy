@@ -118,14 +118,13 @@ const Game = () => {
       }
     }
   };
-  //src={require(`../assets/${imageArray[imageIndex]}`)}
   return (
     <main>
       <div>GAME TIME</div>
       <div>
         <img
           id="hangman"
-          src={require(`../assets/Image_1.jpg`)}
+          src={require(`../assets/${imageArray[imageIndex]}`)}
           alt="Carlie Anglemire"
         />
       </div>
