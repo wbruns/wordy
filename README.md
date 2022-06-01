@@ -26,9 +26,9 @@ We are not currently accepting contributions to this project at this time.
 
 ## Questions
 Please refer to one of our personal GitHub pages with any questions: 
-https://github.com/wbruns
-https://github.com/sstover25
-https://github.com/Mouse0226
+- https://github.com/wbruns
+- https://github.com/sstover25
+- https://github.com/Mouse0226
 
 ## Images
 ![image](https://user-images.githubusercontent.com/93630706/171310565-12cb1766-add1-437c-821e-8cd03a196858.png)
