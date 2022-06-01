@@ -47,8 +47,6 @@ function Signup(props) {
     // Chooses the puzzle word for today's puzzle and transforms it into two arrays of letters
     const { todays_word, current_word } = getWord();
 
-    console.log(todays_word, current_word);
-
     Auth.login(token);
 
     try {
