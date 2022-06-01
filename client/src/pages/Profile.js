@@ -29,8 +29,6 @@ const Profile = () => {
             variables: { username }
         });
 
-        console.log("deletedUser", deletedUser);
-
         Auth.logout();
     }
 

@@ -3,8 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_GAME, UPDATE_STATS } from "../utils/mutations";
 import { QUERY_GAME, QUERY_STATS } from "../utils/queries";
 import Auth from "../utils/auth";
-// import dateFormat from "../utils/dateFormatter";
-import { getWord, checkLetters } from "../utils/wordFunctions";
+import { checkLetters } from "../utils/wordFunctions";
 import { Navigate } from "react-router-dom";
 
 const Game = () => {
@@ -28,33 +27,7 @@ const Game = () => {
   let games_won = userStats?.stats.games_won;
   let current_streak = userStats?.stats.current_streak;
 
-  // const newDate = "5/30/2022"; // dateFormat(new Date());
-  // console.log(newDate);
-
   if (gameData) {
-    // console.log(typeof(gameData.game.game_date));
-    // const currentDate = gameData.game.game_date;
-    // if (newDate !== currentDate) {
-    //   const { todays_word, current_word } = getWord();
-
-    //   console.log("make a new game!");
-    //   console.log("original", gameData.game.game_date);
-    //   console.log("today", newDate);
-      
-    //   updateGame({
-    //     variables: {
-    //       game_username: username,
-    //       current_word: current_word,
-    //       correct_letters_guessed: [],
-    //       todays_word: todays_word,
-    //       incorrect_letters_guessed: [],
-    //       game_date: newDate,
-    //       game_finished: false,
-    //     },
-    //   });
-
-    // }
-    console.log(gameData);
     // If the user has guessed incorrectly 6 times, the game ends and the user loses
     if (gameData.game.incorrect_letters_guessed.length >= 6) {
       // Update the stats to reset the current_streak and update the games_played by 1
@@ -143,7 +116,6 @@ const Game = () => {
       for (let i = 0; i < todays_word.length; i++) {
         if (guess === todays_word[i]) {
           current_word.splice(i, 1, guess);
-          console.log(current_word);
         }
       }
 
@@ -226,12 +198,12 @@ const Game = () => {
           alt="The hangman person"
         />
       </div>
-      <div>{gameData.game.correct_letters_guessed}</div>
-      <div>{gameData.game.incorrect_letters_guessed}</div>
+      <div>Correct Letters:&nbsp;{gameData.game.correct_letters_guessed}</div>
+      <div>Incorrect Letters:&nbsp;{gameData.game.incorrect_letters_guessed}</div>
       <div>{gameData.game.current_word}</div>
       <div>
         <form onSubmit={handleFormSubmit}>
-          <label htmlFor="guess">Guess:</label>
+          <label htmlFor="guess">Guess:&nbsp;</label>
           <input
             placeholder="Enter a letter"
             name="guess"

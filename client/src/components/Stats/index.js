@@ -6,18 +6,14 @@ import { UPDATE_STATS } from '../../utils/mutations';
 const Stats = (username) => {
     const [updateStats] = useMutation(UPDATE_STATS, { variables: { stats_username: username.username } });
     const { loading, data } = useQuery(QUERY_STATS, { variables: { stats_username: username.username } });
-    
 
     const [stats, setStats] = useState({});
 
     useEffect(() => {
-
-        if (data) {setStats(data.stats)
-
-        console.log(data.stats);}
+        if (data) {
+            setStats(data.stats);
+        }
     }, [data]);
-
-
 
     const handleDelete = async (event) => {
 
@@ -30,10 +26,7 @@ const Stats = (username) => {
             }
         });
 
-        console.log("deleted Stats", deletedStats);
-
         setStats(deletedStats.updateStats);
-
     }
 
     if (loading) {

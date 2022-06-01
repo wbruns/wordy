@@ -43,7 +43,7 @@ const Login = (props) => {
             <h2>Login</h2>
             <form onSubmit={handleFormSubmit}>
                 <div className="flex-row">
-                    <label htmlFor="user">Username</label>
+                    <label htmlFor="user">Username:</label>
                     <input
                         placeholder="username"
                         name="username"
