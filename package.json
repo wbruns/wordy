@@ -9,9 +9,7 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,8 +19,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^5.1.0",
-    "gh-pages": "^4.0.0"
+    "concurrently": "^5.1.0"
   },
   "bugs": {
     "url": "https://github.com/wbruns/wordy/issues"
