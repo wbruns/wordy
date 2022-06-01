@@ -3,7 +3,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_GAME, UPDATE_STATS } from "../utils/mutations";
 import { QUERY_GAME, QUERY_STATS } from "../utils/queries";
 import Auth from "../utils/auth";
-import { checkLetters } from "../utils/wordFunctions";
+// import dateFormat from "../utils/dateFormatter";
+import { getWord, checkLetters } from "../utils/wordFunctions";
 import { Navigate } from "react-router-dom";
 
 const Game = () => {
@@ -27,7 +28,33 @@ const Game = () => {
   let games_won = userStats?.stats.games_won;
   let current_streak = userStats?.stats.current_streak;
 
+  // const newDate = "5/30/2022"; // dateFormat(new Date());
+  // console.log(newDate);
+
   if (gameData) {
+    // console.log(typeof(gameData.game.game_date));
+    // const currentDate = gameData.game.game_date;
+    // if (newDate !== currentDate) {
+    //   const { todays_word, current_word } = getWord();
+
+    //   console.log("make a new game!");
+    //   console.log("original", gameData.game.game_date);
+    //   console.log("today", newDate);
+      
+    //   updateGame({
+    //     variables: {
+    //       game_username: username,
+    //       current_word: current_word,
+    //       correct_letters_guessed: [],
+    //       todays_word: todays_word,
+    //       incorrect_letters_guessed: [],
+    //       game_date: newDate,
+    //       game_finished: false,
+    //     },
+    //   });
+
+    // }
+    console.log(gameData);
     // If the user has guessed incorrectly 6 times, the game ends and the user loses
     if (gameData.game.incorrect_letters_guessed.length >= 6) {
       // Update the stats to reset the current_streak and update the games_played by 1
