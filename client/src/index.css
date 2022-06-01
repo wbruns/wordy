@@ -1,3 +1,10 @@
+:root {
+  --primary: #071013;
+  --secondary: #A2AEBB;
+  --tertiary: #75ABBC;
+  --start: #23B5D3;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +17,82 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+label {
+  padding-right: 3px;
+}
+
+header {
+  background: var(--primary);
+}
+
+header a {
+  color: var(--tertiary);
+  text-decoration: none;
+  padding-left: 0.75rem;
+}
+
+main {
+  text-align: center;
+}
+
+button {
+  font-weight: 500;
+  padding: 0.025rem 1rem;
+  margin: 0.35rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  background-color: var(--secondary);
+}
+
+footer {
+  margin: auto;
+  width: 50%;
+}
+
+.game-button {
+  background-color: var(--start);
+}
+
+.game-button a {
+  text-decoration: none;
+  font-size: x-large;
+  color: white;
+}
+
+.footer-text {
+  text-align: center;
+}
+
+.container {
+  width: 50%;
+}
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+}
+
+.flex-end {
+  width: 50%;
+  margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+  header a {
+    margin-top: 0.5rem;
+  }
+  
+  .container {
+    width: 80%;
+  }
 }
