@@ -19,7 +19,7 @@ This application is licensed under: <br />
 To install this application, this remote repository will need to be cloned into your local repository.
 
 ## Usage
-The application is deployed at <Heroku Site>. A local version can also be launched via localhost if the repository exists on a local machine.
+The application is deployed at https://wordy-hangman.herokuapp.com/. A local version can also be launched via localhost if the repository exists on a local machine.
 
 ## Contribute
 We are not currently accepting contributions to this project at this time.
